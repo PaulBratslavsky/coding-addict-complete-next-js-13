@@ -1,20 +1,16 @@
-import CTA from "../components/CTA";
-import Benefits from "../components/Benefits";
-import Hero from "../components/Hero";
-import Stats from "../components/Stats";
-import Steps from "../components/Steps";
-import Faqs from "../components/Faqs";
+import { getPage } from "../helpers/getPage";
+import BlockRenderer from "../components/BlockRenderer";
+import Oops from "../components/Oops";
 
 export default async function Home() {
+  const { data } = await getPage("home");
+  if (!data || data.length === 0) return <Oops />;
+
+  const blocks = data[0].attributes.Blocks;
 
   return (
     <div>
-      <Hero />
-      <Stats />
-      <Benefits />
-      <Steps />
-      <Faqs />
-      <CTA />
+      <BlockRenderer blocks={blocks} />
     </div>
   );
 }

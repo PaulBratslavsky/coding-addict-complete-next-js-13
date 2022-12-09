@@ -3,33 +3,15 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import HighlightedHeading from "./HighlightedHeading";
 
-const data = {
-  heading: "Get [Started] Today",
-  subHeading:
-    "At Inertia, we are commited to provide top-notch services to our customers",
-  linkId: "#cta",
-  link: {
-    text: "Get a quote",
-    href: "/",
-  },
-  image: {
-    url: "https://unsplash.it/540/425?random",
-  },
-};
-
-
-export default function CTA() {
+export default function CTA({ data }) {
   const router = useRouter();
-
-  const { heading, subHeading, link, linkId, image } = data;
-
+  console.log(data);
+  const { heading, text, Link, image } = data;
+  const { url, alternativeText} = image.data.attributes;
   console.log(image.url, "image");
 
   return (
-    <div
-      id={linkId}
-      className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 items-center my-24 mx-4"
-    >
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 items-center my-24 mx-4">
       <div>
         <div className="text-3xl lg:text-6xl xl:text-8xl text-color-gray tracking-1px font-extrabold">
           <HighlightedHeading
@@ -39,13 +21,13 @@ export default function CTA() {
           />
         </div>
         <h2 className="text-lg lg:text-2xl tracking-wide leading-9 lg:w-10/12 mt-2 lg:mt-6 text-color-gray-light">
-          {subHeading}
+          {text}
         </h2>
         <button
-          onClick={() => router.push(link.href)}
+          onClick={() => router.push(Link.href)}
           className="flex items-center relative focus:outline-none justify-center mt-5 lg:mt-10 text-lg lg:text-2xl font-medium text-white p-4 lg:p-8 bg-color-purple rounded-3xl"
         >
-          {link.text}
+          {Link.text}
           <svg
             className="ml-8"
             xmlns="http://www.w3.org/2000/svg"
@@ -82,9 +64,10 @@ export default function CTA() {
         <Image
           loading="lazy"
           className="custom-height"
-          src={image.url}
-          alt="Hero Image"
+          src={url}
+          alt={alternativeText || "Generic Image"}
           fill
+          
         />
       </div>
     </div>
