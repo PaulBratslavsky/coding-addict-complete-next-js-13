@@ -1,5 +1,6 @@
 import qs from "qs";
 
+
 const QUERY = (slug) =>
 qs.stringify({
   populate: {
@@ -12,7 +13,7 @@ qs.stringify({
 
 
 export async function getPage(page) {
-  const BASE_URL = "http://localhost:1337/api/pages";
+  const BASE_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "https://coding-addict-strapi.onrender.com/api/pages";
   try {
     const res = await fetch(BASE_URL + "?" + QUERY(page));
     const data = await res.json();
